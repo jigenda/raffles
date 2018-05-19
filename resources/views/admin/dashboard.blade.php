@@ -111,7 +111,7 @@
         $("#orgname").on('change', function(){
             if($(this).val() != 0){
                 //get data
-                $.get('/admin/getRaffles',{draft}, function(status,data){
+                $.get('/admin/getRaffles',{draft:$(this).val()}, function(status,data){
                     console.log(status);
                     console.log(data);
                 });

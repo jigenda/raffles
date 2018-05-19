@@ -22,6 +22,7 @@ Route::group(['as' => 'admin.', 'middleware' => 'auth.admin', 'namespace' => 'Ad
 	// Route::get('logout', 'DashboardController@logout')->name('logout');
 
     Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
+    Route::get('/getRaffles/{organisation}/{status}', 'RaffleController@getRaffles')->name('getRaffles');
 
 });
 
