@@ -22,7 +22,7 @@ Route::group(['as' => 'admin.', 'middleware' => 'auth.admin', 'namespace' => 'Ad
 	// Route::get('logout', 'DashboardController@logout')->name('logout');
 
     Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
-    Route::get('/getRaffles/{organisation}/{status}', 'RaffleController@getRaffles')->name('getRaffles');
+    
 
 });
 
@@ -50,3 +50,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'Auth\LoginController@showLoginForm')->name('admin');
+Route::get('/getRaffles', 'RaffleController@getRaffles')->name('getRaffles');
+Route::post('/createRaffle', 'RaffleController@createRaffle')->name('createRaffle');
+Route::get('/getSellers', 'Seller\SellerController@getSellers')->name('getSellers');

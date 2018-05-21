@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<h3>Admin's Account</h3>
+<h3>Seller's Account</h3>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#raffles" role="tab" aria-controls="raffles" aria-selected="true">Manage Raffles</a>
@@ -43,7 +43,12 @@
             </div> 
             <div class="card d-none" id="raffles_tab">
             <div class="card-header">
-                     
+                    <div class="    ">
+                        
+                        <div class="   float-right">
+                            <button class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Add New Raffle</button>
+                        </div>
+                    </div>
                     </div>
                 <div class="card-body">
                     

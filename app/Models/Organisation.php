@@ -9,5 +9,8 @@ class Organisation extends Model
 {
     use SoftDeletes;
 
-    
+     public function users()
+    {
+        return $this->belongsToMany(Organisation::class);
+    }
 }
