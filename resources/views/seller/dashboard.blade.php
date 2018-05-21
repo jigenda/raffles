@@ -8,10 +8,10 @@
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#raffles" role="tab" aria-controls="raffles" aria-selected="true">Manage Raffles</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false">Manage Organisations</a>
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false">Manage Tickets</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#sellers" role="tab" aria-controls="sellers" aria-selected="false">Manage Sellers</a>
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#sellers" role="tab" aria-controls="sellers" aria-selected="false">Manage Sales</a>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -76,7 +76,7 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="draft_tbody">
                                               
                                         </tbody>
                                     </table>
@@ -153,6 +153,56 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade bd-example-modal-lg" id="new_prizes" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Prizes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       {!! Form::open(['route' => 'createRaffle', 'method' => 'POST']) !!}
+      <div class="modal-body">
+         
+           <h2>Prizes Here</h2>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <input type="hidden" name="organisation_id" id="organisation_id">
+      </div>
+       {!! Form::close() !!}
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="new_discount" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Discount</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       {!! Form::open(['route' => 'createRaffle', 'method' => 'POST']) !!}
+      <div class="modal-body">
+         
+           <h2>Discount Here</h2>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <input type="hidden" name="organisation_id" id="organisation_id">
+      </div>
+       {!! Form::close() !!}
+    </div>
+  </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
  <script src="{{ asset('js/datepicker.js') }}" type="text/javascript" defer></script> 
@@ -173,6 +223,53 @@
                 $.get('/getRaffles',{org:$(this).val(),status:'Draft'}, function(data,status){
                     console.log(status);
                     console.log(data);
+                    if(data.length > 0){
+                      var table = '';
+                      $.each(data, function(i,v){
+                        console.log(v.status)
+                        table += `<tr>
+                                  <td>${v.name}</td>
+                                  <td>Not Set</td>
+                                  <td>Not Set</td>
+                                  <td>${v.end_date}</td>
+                                  <td>${v.draw_date}</td>
+                                  <td>${v.price}</td>
+                                  <td><button class="btn btn-info btn-sm">View</button>
+                                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#new_discount">Discount</button>
+                                  <button class="btn btn-primary btn-sm prizes" data-toggle="modal" data-target="#new_prizes">Prizes</button>
+                                  <button class="btn btn-danger btn-sm">Delete</button></td>
+                                  </tr>`;
+                      });
+                      $("#example").DataTable().destroy();
+                      $("#draft_tbody").html(table);
+                       
+                         
+                      draft_table = $("#example").DataTable({
+                            responsive: true,
+                            "autoWidth": false,
+                            "order": [[ 0, "asc" ]],
+                            "bDestroy": true  ,
+                            "deferRender": false,
+                            "processing": true,
+                             "columnDefs": [
+                                              {className: " text-left", targets: [0]},
+                                              {className: "text-left", targets:[1]},
+                                              {className: "text-left", targets:[2]},
+                                              {className: "text-left", targets:[3]},
+                                              {className: "text-left", targets:[4]},
+                                              {className: "text-left", targets:[5]},
+                                              {className: "text-left", targets:[6]},
+                                              
+                                              { orderable: false, targets: [6] }
+                                            ],
+
+                            'fnCreatedRow': function (nRow, aData, iDataIndex) {
+                               // $(nRow).attr('id',   + aData[6]); // or whatever you choose to set as the id
+
+                            } 
+                         });
+
+                    }
                 });
                 $("#raffles_tab").removeClass('d-none');
             }else{

@@ -1,4 +1,6 @@
 let mix = require('laravel-mix');
+const path = require('path');
+const webpack = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +13,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix
+	.autoload({})
+	.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');

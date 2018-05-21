@@ -21,5 +21,8 @@ class RaffleController extends Controller
     public function createRaffle()
     {
     	$result = RaffleService::createRaffle();
+
+    	//return view('seller.dashboard');
+    	return redirect()->route('seller.dashboard');
     }
 }
